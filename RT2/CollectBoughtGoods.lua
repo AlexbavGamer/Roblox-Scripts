@@ -7,11 +7,11 @@ local GetLoadingDock = function()
 end
 
 local OnBayStorageChanged = function(OnChanged)
-	local Plot = tostring(GetPlot())
+    local Plot = tostring(GetPlot())
     local DockNum = string.gsub(Plot, "Plot_", "")
-	local BayStorage = game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_"..DockNum].BayStorage
+    local BayStorage = game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_"..DockNum].BayStorage
 	
-	BayStorage.ChildAdded:Connect(OnChanged)
+    BayStorage.ChildAdded:Connect(OnChanged)
 end
 
 local GetVehicle; GetVehicle = function()
