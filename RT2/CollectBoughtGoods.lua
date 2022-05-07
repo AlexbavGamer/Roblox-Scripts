@@ -38,7 +38,8 @@ local UnloadCar = function()
         if v.Name:lower():match("door") then 
             if v:FindFirstChild("Handle") and v:FindFirstChild("Base") then
                 local Vehicle = GetVehicle()
-                Vehicle:SetPrimaryPartCFrame(CFrame.new(v.Base.Position + Vector3.new(10, 6, 10)))
+				local Position = CFrame.new(v.Base.Position + Vector3.new(6, 0, 5)) * CFrame.Angles(0, -90, 0);
+                Vehicle:SetPrimaryPartCFrame(Position)
                 Client.Character:SetPrimaryPartCFrame(Vehicle.PrimaryPart.CFrame * CFrame.new(5, 0, 0))
                 task.wait(.5)
                 game:GetService("ReplicatedStorage").Remotes.UnloadVehicle:InvokeServer()
