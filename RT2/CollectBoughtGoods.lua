@@ -44,13 +44,13 @@ local GetVehicle; GetVehicle = function()
 end
 
 local GetUnloadingDock; GetUnloadingDock = function()
-    return TableUtil.Filter(GetPlot():GetDescendants(), function(part : Instance)
+    return TableUtil.Filter(GetPlot():GetDescendants(), function(part)
         return part.Name:lower():match("door") and part:FindFirstChild("Handle") and part:FindFirstChild("Base")
     end)[1]
 end
 
 local GetVehicleSeat; GetVehicleSeat = function(Vehicle)
-    local Seats = TableUtil.Filter(Vehicle:GetDescendants(), function(part : Instance)
+    local Seats = TableUtil.Filter(Vehicle:GetDescendants(), function(part)
         return part:IsA("Seat")
     end)
     
