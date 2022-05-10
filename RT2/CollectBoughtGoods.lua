@@ -109,6 +109,6 @@ while task.wait(1) do
         end):andThen(function() 
             task.wait(1)
         end)
-		task.wait(1)
+	task.wait(1)
     end
 end
