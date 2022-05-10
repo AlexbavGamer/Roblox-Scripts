@@ -54,14 +54,12 @@ local GetUnloadingDock; GetUnloadingDock = function()
     end)[1]
 end
 
-local GetVehicleSeat; GetVehicleSeat = function(Vehicle, Index)
+local GetVehicleSeat; GetVehicleSeat = function(Vehicle)
     local Seats = TableUtil.Filter(Vehicle:GetDescendants(), function(part : Instance)
         return part:IsA("Seat")
     end)
-
-	if not Index then Index = #Seats end
-
-    return Seats[Index]
+    
+    return Seats[#Seats]
 end
 
 local LoadCar = function()
