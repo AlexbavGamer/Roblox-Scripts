@@ -77,7 +77,7 @@ end
 local UnloadCar = function()
     return Promise.new(function(resolve, reject)
         local UnloadingDock = GetUnloadingDock();
-        local Vehicle = GetVehicle() :: Model;
+        local Vehicle = GetVehicle();
         local VehicleSeat = GetVehicleSeat(Vehicle);
         local VehicleSize = Vehicle:GetExtentsSize();
         VehicleSeat:Sit(Client.Character:WaitForChild("Humanoid"))
