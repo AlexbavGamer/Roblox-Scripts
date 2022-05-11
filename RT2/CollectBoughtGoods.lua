@@ -6,7 +6,7 @@ local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local info = TweenInfo.new()
 
-local TweenModel = function(ModelToTween, CFrame)
+local TweenModel = function(ModelToTween : Model, CFrame : CFrame)
     return Promise.new(function(resolve, reject)
         local CFrameValue = Instance.new("CFrameValue")
         CFrameValue.Value = ModelToTween:GetPrimaryPartCFrame()
@@ -25,11 +25,11 @@ local TweenModel = function(ModelToTween, CFrame)
     end)
 end
 
-local GetPlot = function() return getrenv()._G.Plot end
+local GetPlot = function() return getrenv()._G.Plot :: Instance end
 local GetLoadingDock = function() 
     local Plot = tostring(GetPlot())
     local DockNum = string.gsub(Plot, "Plot_", "")
-    return game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_" .. DockNum].LoadingSpot
+    return game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_" .. DockNum].LoadingSpot :: Instance
 end
 
 local GetVehicle; GetVehicle = function()
@@ -44,22 +44,29 @@ local GetVehicle; GetVehicle = function()
 end
 
 local GetUnloadingDock; GetUnloadingDock = function()
-    return TableUtil.Filter(GetPlot():GetDescendants(), function(part)
+    --[[
+    for i, v in next, GetPlot():GetDescendants() do
+        if v.Name:lower():match("door") then 
+            if v:FindFirstChild("Handle") and v:FindFirstChild("Base") then
+    ]]
+    return TableUtil.Filter(GetPlot():GetDescendants(), function(part : Instance)
         return part.Name:lower():match("door") and part:FindFirstChild("Handle") and part:FindFirstChild("Base")
     end)[1]
 end
 
-local GetVehicleSeat; GetVehicleSeat = function(Vehicle)
-    local Seats = TableUtil.Filter(Vehicle:GetDescendants(), function(part)
+local GetVehicleSeat; GetVehicleSeat = function(Vehicle, Index)
+    local Seats = TableUtil.Filter(Vehicle:GetDescendants(), function(part : Instance)
         return part:IsA("Seat")
     end)
-    
-    return Seats[#Seats]
+
+	if not Index then Index = #Seats end
+
+    return Seats[Index]
 end
 
 local LoadCar = function()
     return Promise.new(function(resolve, reject)
-		local Vehicle = GetVehicle();
+		local Vehicle = GetVehicle() :: Model;
         local VehicleSeat = GetVehicleSeat(Vehicle)
 		
         local VehicleSize = Vehicle:GetExtentsSize();
@@ -76,9 +83,9 @@ end
 
 local UnloadCar = function()
     return Promise.new(function(resolve, reject)
-        local UnloadingDock = GetUnloadingDock();
-        local Vehicle = GetVehicle();
-        local VehicleSeat = GetVehicleSeat(Vehicle);
+        local UnloadingDock = GetUnloadingDock() :: Part;
+        local Vehicle = GetVehicle() :: Model;
+        local VehicleSeat = GetVehicleSeat(Vehicle) :: VehicleSeat;
         local VehicleSize = Vehicle:GetExtentsSize();
         VehicleSeat:Sit(Client.Character:WaitForChild("Humanoid"))
 		local Position = CFrame.new(UnloadingDock.Base.Position + Vector3.new(-VehicleSize.Z + 10, 0, 6)) * CFrame.Angles(0, 90, 0);
@@ -94,7 +101,7 @@ end
 while task.wait(1) do
     local Plot = tostring(GetPlot())
     local DockNum = string.gsub(Plot, "Plot_", "")
-    local BayStorage = game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_"..DockNum].BayStorage;
+    local BayStorage = game:GetService("Workspace").Map.Landmarks["Loading Dock"]["LoadingDock_"..DockNum].BayStorage :: Instance;
 	
 	if #BayStorage:GetChildren() > 0 then
         LoadCar():andThen(function()
@@ -102,6 +109,6 @@ while task.wait(1) do
         end):andThen(function() 
             task.wait(1)
         end)
-	task.wait(1)
+        task.wait(1)
     end
 end
