@@ -44,11 +44,6 @@ local GetVehicle; GetVehicle = function()
 end
 
 local GetUnloadingDock; GetUnloadingDock = function()
-    --[[
-    for i, v in next, GetPlot():GetDescendants() do
-        if v.Name:lower():match("door") then 
-            if v:FindFirstChild("Handle") and v:FindFirstChild("Base") then
-    ]]
     return TableUtil.Filter(GetPlot():GetDescendants(), function(part : Instance)
         return part.Name:lower():match("door") and part:FindFirstChild("Handle") and part:FindFirstChild("Base")
     end)[1]
