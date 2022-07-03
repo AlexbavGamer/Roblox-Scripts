@@ -1,3 +1,5 @@
+local Promise = loadstring(game:HttpGet("https://raw.githubusercontent.com/AlexbavGamer/Roblox-Scripts/main/Promise.lua"))()
+
 local function promisePlayTween(tween)
 	local promise = Promise.new()
 
@@ -19,3 +21,5 @@ local function promisePlayTween(tween)
 
 	return promise
 end
+
+return promisePlayTween;
