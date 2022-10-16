@@ -1,5 +1,4 @@
 --[[
-	Modified by AlexbavGamer
 	ui-engine-v2
 	version 1.3a
 	by Singularity (V3rm @ King Singularity) (Discord @ Singularity#5490)
@@ -10,6 +9,10 @@ local ui_options = {
 	min_size = Vector2.new(400, 300),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
+    close_button = true,
+    close_callback = function(window) 
+    
+    end
 }
 
 do
@@ -21,6 +24,7 @@ local imgui = Instance.new("ScreenGui")
 local Prefabs = Instance.new("Frame")
 local Label = Instance.new("TextLabel")
 local Window = Instance.new("ImageLabel")
+local WindowCloseButton = Instance.new("ImageButton")
 local Resizer = Instance.new("Frame")
 local Bar = Instance.new("Frame")
 local Toggle = Instance.new("ImageButton")
@@ -139,6 +143,13 @@ Bar.BackgroundColor3 = Color3.new(0.160784, 0.290196, 0.478431)
 Bar.BorderSizePixel = 0
 Bar.Position = UDim2.new(0, 0, 0, 5)
 Bar.Size = UDim2.new(1, 0, 0, 15)
+
+WindowCloseButton.Name = "CloseButton"
+WindowCloseButton.Parent = Bar;
+WindowCloseButton.BackgroundColor3 = Color3.new(0.160784, 0.290196, 0.478431)
+WindowCloseButton.BorderSizePixel = 0
+WindowCloseButton.Position = UDim2.new(0, 5, 0, -4)
+WindowCloseButton.Size = UDim2.new(0, 20, 0, 20)
 
 Toggle.Name = "Toggle"
 Toggle.Parent = Bar
