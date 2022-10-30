@@ -1,4 +1,4 @@
-_G.Enabled = true;
+_G.Enabled = false;
 
 local Plataform = Instance.new("Part", game.Workspace)
 Plataform.Name = "Plataform"
@@ -44,15 +44,13 @@ local function OnCharacterAdded(Character: Model)
     local args = {
         [1] = "Teleport"
     }
-    
-    task.wait(1)
 
     game:GetService("Players").LocalPlayer.Character.clientMain.Remote:FireServer(unpack(args))
     
     _G.S_Heartbeat = RunService.Heartbeat:Connect(function(dt)
         if(_G.Enabled) then
             task.wait(0.1);
-
+            Player.Character.HumanoidRootPart.Position = Plataform.Position
             local args = {
                 [1] = "Hit",
                 [2] = Player.Character.Humanoid
@@ -60,9 +58,7 @@ local function OnCharacterAdded(Character: Model)
         
             local Knife = GetPlayerKnife();
             if(Knife ~= nil) then
-                print("Knife Found: "..Knife.Name)
                 game:GetService("Players").LocalPlayer.Character:FindFirstChild(Knife.Name).Knife.Remote:FireServer(unpack(args))
-                Player.Character.HumanoidRootPart.Position = Plataform.Position
             end
         end
     end)
@@ -73,3 +69,4 @@ end
 
 OnCharacterAdded(Player.Character);
 _G.CharacterAdded = Player.CharacterAdded:Connect(OnCharacterAdded);
+
